@@ -1,41 +1,85 @@
-from src.sim.sim_prep.data_preparation import run_data_preparation
-from src.sim.sim_prep.name_resolution import run_name_resolution
-from src.sim.sim_prep.stats_integration import run_stats_integration
-from src.utils.logger import setup_logger
+import os
 import pandas as pd
+
+# Hardcoded paths for configuration
+MATCH_CONTEXT_CSV = "/home/ds/Desktop/ten/data/processed/match_context.csv"
+SIM_READY_CSV = "/home/ds/Desktop/ten/data/processed/sim_ready.csv"
+LOGS_DIR = "/home/ds/Desktop/ten/logs"
+ATP_CSV = "/home/ds/Desktop/ten/data/raw/atp.csv"
+WTA_CSV = "/home/ds/Desktop/ten/data/raw/wta.csv"
+
+from data_preparation import run_data_preparation
+from name_resolution import run_name_resolution
+from stats_integration import run_stats_integration
+
+import logging
+
+def setup_logger(name):
+    """Setup and return a logger."""
+    logger = logging.getLogger(name)
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.setLevel(logging.INFO)
+    return logger
 
 logger = setup_logger("sim_prep_main")
 
+def save_dataframe(df, path, description):
+    """Save a DataFrame to CSV and log the operation."""
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        df.to_csv(path, index=False)
+        logger.info(f"{description} saved successfully to {path}.")
+    except Exception as e:
+        logger.error(f"Failed to save {description} to {path}: {e}")
+        raise
+
 def run_sim_prep(sourced_strength=0.1, estimated_strength=0.1):
     """
-    Orchestrate the entire simulation preparation process.
+    Orchestrate the simulation preparation process, including:
+    - Data preparation
+    - Name resolution
+    - Stats integration
+
+    Returns:
+        pd.DataFrame: The final simulation-ready DataFrame.
     """
     try:
+        # Step 1: Data Preparation
         logger.info("Starting data preparation...")
-        match_context, combined_stats = run_data_preparation()
+        match_context, combined_stats = run_data_preparation(MATCH_CONTEXT_CSV, ATP_CSV, WTA_CSV)
+        logger.info("Data preparation completed.")
 
+        # Step 2: Name Resolution
         logger.info("Starting name resolution...")
-        resolved_context = run_name_resolution(match_context, combined_stats)
+        resolved_context = run_name_resolution(match_context, combined_stats, SIM_READY_CSV, LOGS_DIR)
+        logger.info("Name resolution completed.")
 
-        if not isinstance(resolved_context, pd.DataFrame):
-            raise TypeError("Name resolution output is not of type DataFrame.")
-        logger.info(f"Name resolution complete. Resolved context has {len(resolved_context)} rows.")
-
+        # Step 3: Stats Integration
         logger.info("Starting stats integration...")
         sim_ready_df = run_stats_integration(
             resolved_context,
             combined_stats,
+            SIM_READY_CSV,
             sourced_strength=sourced_strength,
-            estimated_strength=estimated_strength
+            estimated_strength=estimated_strength,
         )
+        logger.info("Stats integration completed.")
 
-        logger.info("Simulation preparation completed successfully.")
+        # Save simulation-ready data
+        save_dataframe(sim_ready_df, SIM_READY_CSV, "Simulation-ready data")
+
+        logger.info("Simulation preparation pipeline completed successfully.")
         return sim_ready_df
+
     except Exception as e:
         logger.error(f"Error during simulation preparation: {e}")
         raise
 
 if __name__ == "__main__":
-    logger.info("Starting simulation preparation...")
+    logger.info("Starting simulation preparation pipeline...")
     sim_ready_df = run_sim_prep()
-    logger.info("Simulation-ready data created!")
+    logger.info("Pipeline completed. Simulation-ready data is available.")

@@ -1,9 +1,18 @@
 import pandas as pd
-from src.config import SIM_READY_CSV
-from src.utils.logger import setup_logger
+import logging
+
+# Logger setup
+def setup_logger(name):
+    logger = logging.getLogger(name)
+    if not logger.handlers:
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.setLevel(logging.INFO)
+    return logger
 
 logger = setup_logger("stats_integration")
-
 
 def calculate_percentile_baseline(stats_df, percentile=20):
     """
@@ -12,7 +21,7 @@ def calculate_percentile_baseline(stats_df, percentile=20):
     """
     try:
         logger.info(f"Calculating {percentile}th percentile baseline for stats.")
-        
+
         # Define directionality for stats
         directionality = {
             "FirstServePercentage": "higher",
@@ -56,7 +65,6 @@ def calculate_percentile_baseline(stats_df, percentile=20):
         logger.error(f"Error calculating percentile baseline: {e}")
         raise
 
-
 def calculate_stat_bounds(stats_df, columns):
     """
     Calculates bounds (min, max) for specified stats columns.
@@ -76,7 +84,6 @@ def calculate_stat_bounds(stats_df, columns):
     except Exception as e:
         logger.error(f"Error calculating stat bounds: {e}")
         raise
-
 
 def adjust_stats_with_iwp(stats, iwp, bounds, baseline_iwp=50.0, adjustment_strength=1.0):
     """
@@ -99,7 +106,7 @@ def adjust_stats_with_iwp(stats, iwp, bounds, baseline_iwp=50.0, adjustment_stre
         "FirstServeWonPercentage": 0.05,
         "SecondServeWonPercentage": 0.05,
         "AcePercentage": 0.1,
-        "DoubleFaultsPerServiceGame":.1,
+        "DoubleFaultsPerServiceGame": .1,
         "BreakPointsFacedPerServiceGame": -0.05,
         "BreakPointsSavedPercentage": 0.05,
         "FirstServeReturnPointsWonPercentage": 0.05,
@@ -131,8 +138,7 @@ def adjust_stats_with_iwp(stats, iwp, bounds, baseline_iwp=50.0, adjustment_stre
 
     return clamped_stats, adjustment_direction
 
-
-def integrate_stats_and_save(match_context, stats_df, sourced_strength=0.1, estimated_strength=0.1):
+def integrate_stats(match_context, stats_df, sim_ready_csv, sourced_strength=0.1, estimated_strength=0.1):
     """
     Integrates stats into the match context and saves the simulation-ready files.
     """
@@ -160,8 +166,6 @@ def integrate_stats_and_save(match_context, stats_df, sourced_strength=0.1, esti
         bounds = calculate_stat_bounds(stats_df, numerical_columns)
 
         final_rows = []
-        simplified_rows = []
-        adjustment_rows = []  # To store IWP adjustments for each player
         match_id = 1
 
         for i in range(0, len(match_context), 2):  # Process pairs of rows for each match
@@ -199,13 +203,6 @@ def integrate_stats_and_save(match_context, stats_df, sourced_strength=0.1, esti
                     stats, iwp, bounds, baseline_iwp=50.0, adjustment_strength=adjustment_strength
                 )
 
-                # Calculate changes for each stat
-                stat_changes = {key: adjusted_stats[key] - stats[key] for key in numerical_columns if key in stats}
-                stat_changes["Player"] = row["Name"]
-                stat_changes["Surface"] = surface
-                stat_changes["IWP"] = iwp
-                adjustment_rows.append(stat_changes)
-
                 # Prepare full simulation-ready row
                 full_row = {
                     "Name": row["Name"],
@@ -219,53 +216,33 @@ def integrate_stats_and_save(match_context, stats_df, sourced_strength=0.1, esti
                 }
                 final_rows.append(full_row)
 
-                # Prepare simplified row
-                simplified_row = {
-                    "MatchID": match_id,
-                    "Player": row["Name"],
-                    "Opponent": opponent["Name"],
-                    **adjusted_stats,
-                }
-                simplified_rows.append(simplified_row)
-
             match_id += 1  # Increment MatchID after processing both players
 
         # Save the full simulation-ready file
         final_df = pd.DataFrame(final_rows)
-        final_df.to_csv(SIM_READY_CSV, index=False)
+        final_df.to_csv(sim_ready_csv, index=False)
         logger.info(f"Simulation-ready file saved with {len(final_df)} rows.")
-
-        # Save the simplified version
-        simplified_csv_path = SIM_READY_CSV.replace("sim_ready.csv", "sim_prepped.csv")
-        simplified_df = pd.DataFrame(simplified_rows)
-        simplified_df.to_csv(simplified_csv_path, index=False)
-        logger.info(f"Simplified simulation-prepped file saved as '{simplified_csv_path}' with {len(simplified_df)} rows.")
-
-        # Save the IWP adjustment impacts
-        adjustments_df = pd.DataFrame(adjustment_rows)
-        adjustments_csv_path = SIM_READY_CSV.replace("sim_ready.csv", "iwp_adjustments.csv")
-        adjustments_df.to_csv(adjustments_csv_path, index=False)
-        logger.info(f"IWP adjustments file saved as '{adjustments_csv_path}' with {len(adjustments_df)} rows.")
 
     except Exception as e:
         logger.error(f"Error integrating stats: {e}")
         raise
 
-
-def run_stats_integration(match_context, stats_df, sourced_strength=0.1, estimated_strength=0.1):
+def run_stats_integration(match_context, stats_df, sim_ready_csv, sourced_strength=0.1, estimated_strength=0.1):
     """
     Runs the stats integration process.
-    
+
     Parameters:
     - match_context (pd.DataFrame): Resolved match context.
     - stats_df (pd.DataFrame): Combined stats DataFrame.
+    - sim_ready_csv (str): Path to save the simulation-ready CSV.
     - sourced_strength (float): Adjustment strength for sourced stats.
     - estimated_strength (float): Adjustment strength for estimated stats.
     """
     logger.info("Running stats integration...")
-    integrate_stats_and_save(
+    integrate_stats(
         match_context,
         stats_df,
+        sim_ready_csv,
         sourced_strength=sourced_strength,
         estimated_strength=estimated_strength
     )
