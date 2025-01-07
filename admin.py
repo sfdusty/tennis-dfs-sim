@@ -10,7 +10,7 @@ SIM_READY_CSV = "data/processed/sim_ready.csv"
 IWP_ADJUSTMENTS_CSV = "data/processed/iwp_adjustments.csv"
 SIMULATION_RESULTS_CSV = "data/processed/simulation_results.csv"
 SIMULATION_DETAILS_CSV = "data/processed/simulation_details.csv"
-PLAYER_POOL_CSV = "data/raw/pool2.csv"
+PLAYER_POOL_CSV = "data/raw/DKSalaries.csv"
 OPTIMIZED_LINEUPS_CSV = "data/processed/optimized_lineups.csv"
 
 # ----- Streamlit Configuration -----
