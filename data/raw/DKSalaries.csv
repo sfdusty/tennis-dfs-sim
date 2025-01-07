@@ -1,0 +1,43 @@
+Position,Name + ID,Name,ID,Roster Position,Salary,Game Info,TeamAbbrev,AvgPointsPerGame
+P,Tommy Paul (37259833),Tommy Paul,37259833,P,11000,Guinard@Paul 01/07/2025 11:00PM ET,Paul,59.80
+P,Daria Kasatkina (37259834),Daria Kasatkina,37259834,P,10300,Kasatkina@Jones 01/08/2025 04:30AM ET,Kasatkina,48.83
+P,Amanda Anisimova (37259835),Amanda Anisimova,37259835,P,10000,Bondar@Anisimova 01/07/2025 11:30PM ET,Anisimova,49.61
+P,Brandon Nakashima (37259836),Brandon Nakashima,37259836,P,9700,Nakashima@Hijikata 01/07/2025 09:00PM ET,Nakashima,51.37
+P,Madison Keys (37259837),Madison Keys,37259837,P,9600,Keys@Ostapenko 01/08/2025 12:40AM ET,Keys,57.52
+P,Nuno Borges (37259838),Nuno Borges,37259838,P,9400,Borges@Navone 01/07/2025 09:00PM ET,Borges,43.49
+P,Benjamin Bonzi (37259839),Benjamin Bonzi,37259839,P,9300,Bonzi@Tu 01/07/2025 09:10PM ET,Bonzi,59.33
+P,Elise Mertens (37259840),Elise Mertens,37259840,P,9200,Mertens@Zarazua 01/08/2025 12:40AM ET,Mertens,45.39
+P,Paula Badosa (37259841),Paula Badosa,37259841,P,9100,Badosa@Krueger 01/07/2025 11:30PM ET,Badosa,53.26
+P,Belinda Bencic (37259842),Belinda Bencic,37259842,P,8900,Samsonova@Bencic 01/07/2025 10:10PM ET,Bencic,38.82
+P,Thanasi Kokkinakis (37259843),Thanasi Kokkinakis,37259843,P,8800,Kokkinakis@Etcheverry 01/08/2025 03:00AM ET,Kokkinakis,50.51
+P,Jessica Pegula (37259844),Jessica Pegula,37259844,P,8700,Sakkari@Pegula 01/07/2025 08:40PM ET,Pegula,58.22
+P,Elina Avanesyan (37259845),Elina Avanesyan,37259845,P,8600,Avanesyan@Minnen 01/07/2025 08:10PM ET,Avanesyan,47.27
+P,Ben Shelton (37259846),Ben Shelton,37259846,P,8500,Mensik@Shelton 01/08/2025 12:30AM ET,Shelton,53.66
+P,Alejandro Davidovich Fokina (37259847),Alejandro Davidovich Fokina,37259847,P,8400,Korda@Davidovich Fokina 01/07/2025 08:40PM ET,Davidovich Fokina,44.91
+P,Veronika Kudermetova (37259848),Veronika Kudermetova,37259848,P,8300,Kudermetova@Osorio 01/07/2025 10:30PM ET,Kudermetova,41.72
+P,Diana Shnaider (37259849),Diana Shnaider,37259849,P,8200,Shnaider@Vondrousova 01/07/2025 11:20PM ET,Shnaider,55.62
+P,Miomir Kecmanovic (37259850),Miomir Kecmanovic,37259850,P,8100,O'Connell@Kecmanovic 01/07/2025 08:30PM ET,Kecmanovic,44.25
+P,Ann Li (37259851),Ann Li,37259851,P,8000,Li@Yastremska 01/07/2025 09:10PM ET,Li,51.62
+P,Magda Linette (37259852),Magda Linette,37259852,P,7800,Linette@Joint 01/07/2025 08:00PM ET,Linette,47.24
+P,Ons Jabeur (37259853),Ons Jabeur,37259853,P,7700,Putintseva@Jabeur 01/08/2025 01:50AM ET,Jabeur,50.63
+P,Yulia Putintseva (37259854),Yulia Putintseva,37259854,P,7600,Putintseva@Jabeur 01/08/2025 01:50AM ET,Putintseva,56.41
+P,Maya Joint (37259855),Maya Joint,37259855,P,7500,Linette@Joint 01/07/2025 08:00PM ET,Joint,50.2
+P,Dayana Yastremska (37259856),Dayana Yastremska,37259856,P,7300,Li@Yastremska 01/07/2025 09:10PM ET,Yastremska,39.69
+P,Christopher O'Connell (37259857),Christopher O'Connell,37259857,P,7200,O'Connell@Kecmanovic 01/07/2025 08:30PM ET,O'Connell,46.40
+P,Marketa Vondrousova (37259858),Marketa Vondrousova,37259858,P,7100,Shnaider@Vondrousova 01/07/2025 11:20PM ET,Vondrousova,48.8
+P,Camila Osorio (37259859),Camila Osorio,37259859,P,7000,Kudermetova@Osorio 01/07/2025 10:30PM ET,Osorio,44.06
+P,Sebastian Korda (37259860),Sebastian Korda,37259860,P,6900,Korda@Davidovich Fokina 01/07/2025 08:40PM ET,Korda,53.20
+P,Jakub Mensik (37259861),Jakub Mensik,37259861,P,6800,Mensik@Shelton 01/08/2025 12:30AM ET,Mensik,50.83
+P,Greet Minnen (37259862),Greet Minnen,37259862,P,6700,Avanesyan@Minnen 01/07/2025 08:10PM ET,Minnen,40.80
+P,Maria Sakkari (37259863),Maria Sakkari,37259863,P,6600,Sakkari@Pegula 01/07/2025 08:40PM ET,Sakkari,49.04
+P,Tomas Martin Etcheverry (37259864),Tomas Martin Etcheverry,37259864,P,6500,Kokkinakis@Etcheverry 01/08/2025 03:00AM ET,Etcheverry,50.17
+P,Liudmila Samsonova (37259865),Liudmila Samsonova,37259865,P,6400,Samsonova@Bencic 01/07/2025 10:10PM ET,Samsonova,46.08
+P,Ashlyn Krueger (37259866),Ashlyn Krueger,37259866,P,6200,Badosa@Krueger 01/07/2025 11:30PM ET,Krueger,40.21
+P,Renata Zarazua (37259867),Renata Zarazua,37259867,P,6100,Mertens@Zarazua 01/08/2025 12:40AM ET,Zarazua,43.62
+P,Li Tu (37259868),Li Tu,37259868,P,6000,Bonzi@Tu 01/07/2025 09:10PM ET,Tu,48.84
+P,Mariano Navone (37259869),Mariano Navone,37259869,P,5900,Borges@Navone 01/07/2025 09:00PM ET,Navone,41.10
+P,Jelena Ostapenko (37259870),Jelena Ostapenko,37259870,P,5700,Keys@Ostapenko 01/08/2025 12:40AM ET,Ostapenko,49.35
+P,Rinky Hijikata (37259871),Rinky Hijikata,37259871,P,5600,Nakashima@Hijikata 01/07/2025 09:00PM ET,Hijikata,41.90
+P,Anna Bondar (37259872),Anna Bondar,37259872,P,5200,Bondar@Anisimova 01/07/2025 11:30PM ET,Bondar,34.81
+P,Emerson Jones (37259873),Emerson Jones,37259873,P,4800,Kasatkina@Jones 01/08/2025 04:30AM ET,Jones,0
+P,Manuel Guinard (37259874),Manuel Guinard,37259874,P,4200,Guinard@Paul 01/07/2025 11:00PM ET,Guinard,47.59
